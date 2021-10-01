@@ -1,0 +1,16 @@
+{
+  "stylelint.enable": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "editor.formatOnSave": true,
+  "[twig]": {
+      "editor.formatOnSave": false,
+  },
+  "[html]": {
+      "editor.formatOnSave": false,
+  },
+  "files.associations": {
+    "*.html": "twig",
+  },
+}

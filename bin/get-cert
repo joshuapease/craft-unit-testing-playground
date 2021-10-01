@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+mkdir -p ./certs
+
+docker compose cp nginx:/etc/ssl/self-signed/self-signed.crt ./certs/craftunit.crt

@@ -1,0 +1,15 @@
+defaultPlacement: end
+enableVersioning: true
+handle: testStructure
+name: 'Test Structure'
+propagationMethod: all
+siteSettings:
+  f9163090-ed07-40c3-8e53-1beae99c9714: # Craft Unit
+    enabledByDefault: true
+    hasUrls: true
+    template: test-structure/_entry
+    uriFormat: '{{ parent.uri ?? ''/test-structure'' }}/{{ slug }}'
+structure:
+  maxLevels: null
+  uid: d0926783-1c5e-477f-9686-90511e3a487f
+type: structure

@@ -1,0 +1,92 @@
+---
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./.docker-config/nginx/Dockerfile
+      args:
+        - SSL_CERT_DOMAIN=${SSL_CERT_DOMAIN:-craftunit.test}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - cpresources:/var/www/html/web/cpresources
+      - ./web:/var/www/html/web:cached
+      - ssl-certs:/etc/ssl/self-signed
+
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7.29
+    volumes:
+      - db:/var/lib/mysql
+      - ./.docker-config/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: craftunit
+      MYSQL_PASSWORD: craftunit
+      MYSQL_DATABASE: craftunit_development
+
+  redis:
+    image: redis:5.0
+
+  php:
+    image: craftunit_php
+    build:
+      context: .
+      dockerfile: ./.docker-config/php/Dockerfile
+    entrypoint: ./.docker-config/php/entrypoint.sh
+    command: [
+      "docker-php-entrypoint",
+      "php-fpm"
+    ]
+    expose:
+      - 9000
+    volumes:
+      - cpresources:/var/www/html/web/cpresources
+      - storage:/var/www/html/storage
+      - .:/var/www/html:cached
+    environment:
+      - ENVIRONMENT=dev
+      - DB_DSN=mysql:host=mysql;port=3306;dbname=craftunit_development
+      - DB_USER=craftunit
+      - DB_PASSWORD=craftunit
+      - DB_TABLE_PREFIX
+      - SECURITY_KEY=asdfasdfasdfasdfasdf
+      - APP_ID=craftunit
+      - REDIS_HOST=redis
+      - PRIMARY_SITE_URL=${PRIMARY_SITE_URL:-http://craftunit.test}
+      - XDEBUG_MODE
+
+  mysql_test:
+    image: mysql:5.7.29
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: craftunit
+      MYSQL_PASSWORD: craftunit
+      MYSQL_DATABASE: craftunit_test
+
+  test:
+    image: craftunit_php
+    volumes:
+      - .:/var/www/html
+    environment:
+      - ENVIRONMENT=test
+      - DB_DSN=mysql:host=mysql_test;port=3306;dbname=craftunit_test
+      - DB_USER=craftunit
+      - DB_PASSWORD=craftunit
+      - DB_TABLE_PREFIX
+      - SECURITY_KEY=asdfasdfasdfasdfasdf
+      - PRIMARY_SITE_URL=http://craftunit.test
+      - XDEBUG_MODE
+
+volumes:
+  db:
+  cpresources:
+  storage:
+  ssl-certs:

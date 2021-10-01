@@ -1,0 +1,24 @@
+dateModified: 1633128551
+email:
+  fromEmail: joshua.pease@viget.com
+  fromName: 'Craft Unit'
+  transportType: craft\mail\transportadapters\Sendmail
+meta:
+  __names__:
+    5b53894a-4309-497e-aa4d-8218da966f33: 'Craft Unit' # Craft Unit
+    a5b3f9f5-8405-46f3-a4db-82e9a554d62e: Default # Default
+    c7a290ec-b68b-4aff-b359-8343111b9c61: Common # Common
+    e596becd-2a3d-44ee-83bb-51d4b3de7e63: 'Test Structure' # Test Structure
+    f9163090-ed07-40c3-8e53-1beae99c9714: 'Craft Unit' # Craft Unit
+system:
+  edition: solo
+  live: true
+  name: 'Craft Unit'
+  schemaVersion: 3.7.8
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  requireEmailVerification: true

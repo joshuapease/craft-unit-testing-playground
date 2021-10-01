@@ -1,0 +1,13 @@
+/.env
+/.idea
+/coverage
+/cypress/videos
+/cypress/screenshots
+/node_modules
+/vendor
+/web/assets
+/web/manifest.json
+/certs
+.DS_Store
+.eslintcache
+stats.json
