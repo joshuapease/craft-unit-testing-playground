@@ -3,14 +3,12 @@
 namespace modules\craftunit\services;
 
 use Craft;
-use craft\base\Component;
 use craft\elements\Entry;
 
-class Nav extends Component
+class Nav
 {
 
     /**
-     * ⚠️ This would be a utility function in one of your websites modules.
      * Create an array of breadcrumbs from an Entries
      *
      * @param Entry $entry
@@ -20,6 +18,8 @@ class Nav extends Component
     public static function getBreadcrumbsFromAncestors(Entry $entry, array $options = []): array
     {
         $defaultOptions = [
+            'prepend' => [],
+            'append' => [],
             'filter' => null,
         ];
 
@@ -40,6 +40,10 @@ class Nav extends Component
             'url' => $entry->url,
         ], $ancestors);
 
-        return $ancestors;
+        return [
+            ...$config['prepend'],
+            ...$ancestors,
+            ...$config['append'],
+        ];
     }
 }
